@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destinée & Numérologie - Révélation Personnelle</title>
+    <title>AuraIA - Oracle & Chronologie Astrale</title>
     <style>
         * {
             margin: 0;
@@ -12,8 +12,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #0b0c10;
-            color: #c5c6c7;
+            background-color: #07080a;
+            color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,25 +21,43 @@
             padding: 20px;
         }
         .container {
-            background: #1f2833;
+            background: linear-gradient(145deg, #121820 0%, #0d1117 100%);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 600px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            max-width: 650px;
             width: 100%;
             border: 1px solid #c5a059;
             text-align: center;
+            position: relative;
+        }
+        .badge-ai {
+            display: inline-block;
+            background: rgba(102, 252, 241, 0.1);
+            color: #66fcf1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(102, 252, 241, 0.3);
+            text-transform: uppercase;
         }
         h1 {
-            color: #66fcf1;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.1rem;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        h1 span {
+            color: #c5a059;
         }
         p {
-            color: #c5c6c7;
-            font-size: 0.95rem;
-            margin-bottom: 25px;
-            line-height: 1.5;
+            color: #a0a6b2;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
         .form-group {
             margin-bottom: 20px;
@@ -50,46 +68,56 @@
             margin-bottom: 8px;
             color: #c5a059;
             font-weight: 600;
+            font-size: 0.95rem;
         }
         input {
             width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #45a29e;
-            background: #0b0c10;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #3a4454;
+            background: #07080a;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            transition: 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #66fcf1;
+            box-shadow: 0 0 8px rgba(102, 252, 241, 0.2);
         }
         .btn-main {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background: linear-gradient(135deg, #c5a059 0%, #997430 100%);
             color: #fff;
             border: none;
             cursor: pointer;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+            box-shadow: 0 5px 20px rgba(197, 160, 89, 0.4);
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .btn-main:hover {
-            opacity: 0.9;
+            opacity: 0.95;
             transform: translateY(-2px);
         }
         .hidden {
             display: none;
         }
         .loader {
-            border: 4px solid #0b0c10;
+            border: 4px solid #07080a;
             border-top: 4px solid #66fcf1;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 30px auto;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -97,40 +125,69 @@
         }
         .result-box {
             text-align: left;
-            background: #0b0c10;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #45a29e;
+            background: #07080a;
+            padding: 22px;
+            border-radius: 10px;
+            border: 1px solid #3a4454;
             margin-bottom: 25px;
         }
         .result-box h3 {
             color: #66fcf1;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
         .price-tag {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #66fcf1;
             margin: 15px 0;
             font-weight: bold;
         }
         .footer-note {
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 0.8rem;
-            color: #888;
+            color: #777;
+        }
+        /* God Mode */
+        .god-mode-trigger {
+            position: absolute;
+            bottom: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #45a29e;
+            font-size: 0.75rem;
+            cursor: pointer;
+            opacity: 0.4;
+        }
+        .god-mode-trigger:hover {
+            opacity: 1;
+        }
+        .admin-panel {
+            background: #0f131a;
+            border: 1px dashed #66fcf1;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .admin-panel h4 {
+            color: #66fcf1;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- ÉTAPE 1 : LE FORMULAIRE -->
+        <!-- ÉTAPE 1 : LE FORMULAIRE D'ACCUEIL -->
         <div id="step-form">
-            <h1>Révélez votre Destinée</h1>
-            <p>Entrez vos informations pour lancer le calcul astrologique et numérologique instantané de votre profil.</p>
+            <div class="badge-ai">✨ Propulsé par Intelligence Artificielle & Astrologie Avancée</div>
+            <h1>Découvrez Votre Avenir et Votre <span>Futur Proche</span></h1>
+            <p>Croisez l'analyse de votre chronologie astrale unique et les algorithmes prédictifs pour lever le voile sur ce qui vous attend.</p>
             
             <div class="form-group">
                 <label for="name">Votre Prénom :</label>
-                <input type="text" id="name" placeholder="Ex: Thomas">
+                <input type="text" id="name" placeholder="Ex: Alexandre">
             </div>
 
             <div class="form-group">
@@ -138,36 +195,54 @@
                 <input type="date" id="dob">
             </div>
 
-            <button class="btn-main" onclick="startAnalysis()">Calculer mon thème gratuit</button>
+            <button class="btn-main" onclick="startAnalysis()">Lancer l'analyse prédictive</button>
         </div>
 
-        <!-- ÉTAPE 2 : LE CHARGEMENT (FAUX CALCUL) -->
+        <!-- ÉTAPE 2 : LE CHARGEMENT -->
         <div id="step-loader" class="hidden">
-            <h1>Analyse cosmique en cours...</h1>
-            <p>Connexion aux cycles planétaires et calcul de votre chemin de vie...</p>
+            <h1 style="font-size: 1.5rem;">Connexion à la chronologie astrale...</h1>
+            <p>L'IA analyse vos cycles planétaires et croise vos données vibratoires...</p>
             <div class="loader"></div>
         </div>
 
-        <!-- ÉTAPE 3 : LE RÉSULTAT PARTIEL + APPEL À L'ACHAT -->
+        <!-- ÉTAPE 3 : RÉSULTAT ET PAIEMENT -->
         <div id="step-result" class="hidden">
-            <h1>Analyse prête pour <span id="userName" style="color:#66fcf1;"></span> !</h1>
-            <p>D'après votre date de naissance, voici vos premières tendances vibratoires :</p>
+            <h1>Analyse prête pour <span id="userName" style="color:#66fcf1;"></span></h1>
+            <p>Les premières synchronicites de votre avenir ont été décodées :</p>
             
             <div class="result-box">
-                <h3>⚡ Votre Vibration Dominante : Révélation & Transformation</h3>
-                <p id="userVibe">Une année charnière s'ouvre devant vous. Des choix décisifs sur le plan professionnel et personnel vont s'imposer d'ici les 3 prochains mois.</p>
+                <h3>⚡ Votre Prochaine Grande Transition Karmique</h3>
+                <p id="userVibe">Une puissante ouverture énergétique se profile. Les choix que vous ferez d'ici les 30 prochains jours structureront votre trajectoire pour les années à venir.</p>
                 <br>
-                <p style="color: #c5a059; font-style: italic;">⚠️ Attention : Un blocage énergétique a été détecté dans votre secteur relationnel. Le rapport complet détaille comment le contourner.</p>
+                <p style="color: #c5a059; font-style: italic;">⚠️ Un tournant décisif a été détecté dans votre sphère d'abondance et de réussite personnelle.</p>
             </div>
 
-            <p>Pour lire l'intégralité de votre rapport détaillé (15 pages avec les prévisions mois par mois) :</p>
+            <div id="pay-section">
+                <p>Découvrez l'intégralité de votre rapport prospectif (15 pages détaillées mois par mois) :</p>
+                <div class="price-tag">9,90 € <span style="font-size:0.95rem; text-decoration:line-through; color:#777;">29,90 €</span></div>
 
-            <div class="price-tag">9,90 € <span style="font-size:0.9rem; text-decoration:line-through; color:#888;">29,00 €</span></div>
+                <!-- REMPLACE le lien ci-dessous par ton vrai lien Stripe -->
+                <a href="TON_LIEN_STRIPE_ICI" class="btn-main">Débloquer mon rapport complet (Stripe)</a>
+            </div>
 
-            <!-- REMPLACE le lien ci-dessous par ton vrai lien Stripe -->
-            <a href="TON_LIEN_STRIPE_ICI" class="btn-main">Débloquer mon rapport complet (Stripe)</a>
+            <!-- ÉTAPE 4 : RAPPORT COMPLET (GOD MODE) -->
+            <div id="full-report" class="hidden result-box" style="border-color: #c5a059; background: #151b22;">
+                <h3 style="color: #c5a059;">👑 RAPPORT INTÉGRAL DÉBLOQUÉ (Mode Admin)</h3>
+                <p><strong>1. Prévisions Mois par Mois :</strong> Période faste au printemps, stabilisation en été, et opportunité majeure de changement à l'automne.</p>
+                <br>
+                <p><strong>2. Clé de l'Avenir :</strong> Vos vibrations indiquent une réussite totale si vous foncez sur l'automatisation de vos projets personnels.</p>
+            </div>
 
-            <div class="footer-note">🔒 Paiement 100% sécurisé • Accès immédiat au PDF</div>
+            <button class="btn-main" onclick="resetForm()" style="background: #3a4454; font-size: 0.95rem; padding: 12px; margin-top: 20px;">Effectuer un autre calcul</button>
+        </div>
+
+        <!-- GOD MODE -->
+        <button class="god-mode-trigger" onclick="toggleGodMode()">⚡ God Mode</button>
+
+        <div id="admin-panel" class="admin-panel hidden">
+            <h4>Panneau de Contrôle Admin</h4>
+            <p style="font-size: 0.85rem; margin-bottom: 10px;">Simule un achat réussi pour tester le rapport complet :</p>
+            <button class="btn-main" onclick="unlockAdminReport()" style="padding: 10px; font-size: 0.9rem; background: #28a745; margin-top:0;">Débloquer le rapport complet (God Mode)</button>
         </div>
     </div>
 
@@ -177,28 +252,43 @@
             const dob = document.getElementById('dob').value;
 
             if(!name || !dob) {
-                alert("Veuillez remplir tous les champs pour lancer l'analyse.");
+                alert("Veuillez renseigner votre prénom et votre date de naissance.");
                 return;
             }
 
-            // Cache le formulaire et affiche le loader
             document.getElementById('step-form').classList.add('hidden');
             document.getElementById('step-loader').classList.remove('hidden');
 
-            // Simule un calcul de 2.5 secondes pour faire "vrai"
             setTimeout(function() {
                 document.getElementById('userName').innerText = name;
                 
-                // Personnalise un tout petit peu la vibe selon le mois de naissance pour faire illusion
                 const month = dob.split('-')[1];
-                if(month >= 6) {
-                    document.getElementById('userVibe').innerText = "Une puissante énergie de concrétisation financière et d'opportunités inattendues se dessine pour vous cette saison.";
+                if(month <= 6) {
+                    document.getElementById('userVibe').innerText = "Une phase d'expansion rapide s'annonce. Votre chronologie indique des rentrées d'énergie et de nouvelles opportunités inattendues.";
                 }
 
-                // Cache le loader et affiche le résultat
                 document.getElementById('step-loader').classList.add('hidden');
                 document.getElementById('step-result').classList.remove('hidden');
             }, 2500);
+        }
+
+        function toggleGodMode() {
+            document.getElementById('admin-panel').classList.toggle('hidden');
+        }
+
+        function unlockAdminReport() {
+            document.getElementById('pay-section').classList.add('hidden');
+            document.getElementById('full-report').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        function resetForm() {
+            document.getElementById('step-result').classList.add('hidden');
+            document.getElementById('step-form').classList.remove('hidden');
+            document.getElementById('pay-section').classList.remove('hidden');
+            document.getElementById('full-report').classList.add('hidden');
+            document.getElementById('name').value = '';
+            document.getElementById('dob').value = '';
         }
     </script>
 
