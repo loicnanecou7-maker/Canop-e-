@@ -9,13 +9,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
             background-color: #f0f2f5;
-            color: #1c1e21;
+            color: #050505;
         }
-        /* Top Navigation Bar (Style Facebook en Rouge & Blanc) */
+        /* Top Navigation Style Facebook Mobile/Desktop */
         header {
             background-color: #ffffff;
             height: 56px;
@@ -23,208 +23,239 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #e41e3f; /* Le bleu Facebook transformé en rouge vif */
-            letter-spacing: -1px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #e41e3f; /* Le rouge Hiérarchie */
+            letter-spacing: -1.5px;
         }
-        .nav-center {
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-icon {
+            font-size: 1.2rem;
+            background: #f0f2f5;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Container principal */
+        .main-container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        /* Boîte de publication style Facebook */
+        .fb-create-box {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            padding: 12px 16px;
+            margin-bottom: 12px;
+        }
+        .fb-create-top {
             display: flex;
             gap: 10px;
+            align-items: center;
+            border-bottom: 1px solid #e4e6eb;
+            padding-bottom: 10px;
         }
-        .nav-btn {
-            background: none;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #65676b;
-            padding: 8px 20px;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .nav-btn:hover, .nav-btn.active {
-            background-color: #ffebee;
-            color: #e41e3f;
-        }
-        .user-status {
-            font-weight: bold;
-            color: #e41e3f;
-            background: #ffebee;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* Layout Principal */
-        main {
+        .fb-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e41e3f;
+            color: white;
             display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 20px;
-            gap: 20px;
+            font-weight: bold;
         }
-
-        /* Fil d'actualité central */
-        .feed {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        /* Boîte de publication (Créer un post) */
-        .create-post {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .create-post textarea {
-            width: 100%;
+        .fb-input-fake {
+            background: #f0f2f5;
             border: none;
-            resize: none;
-            padding: 10px;
-            font-size: 1.1rem;
+            border-radius: 20px;
+            padding: 10px 15px;
+            width: 100%;
+            font-size: 0.95rem;
+            color: #65676b;
             outline: none;
         }
-        .post-actions-bar {
+        .fb-create-bottom {
             display: flex;
-            justify-content: flex-end;
-            border-top: 1px solid #e4e6eb;
-            padding-top: 10px;
-            margin-top: 10px;
+            justify-content: space-around;
+            padding-top: 8px;
         }
-        .btn-red {
-            background-color: #e41e3f;
-            color: white;
+        .fb-action-btn {
+            background: none;
             border: none;
-            padding: 8px 16px;
-            font-weight: bold;
-            border-radius: 6px;
+            font-weight: 600;
+            color: #65676b;
+            font-size: 0.85rem;
             cursor: pointer;
-        }
-        .btn-red:hover {
-            background-color: #c51633;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* Style des Posts */
-        .post {
+        /* Fil d'actualité - Posts */
+        .fb-post {
             background: #ffffff;
             border-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            margin-bottom: 15px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
+            padding-top: 12px;
         }
-        .post-header {
+        .fb-post-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            padding: 0 16px;
+            margin-bottom: 8px;
         }
-        .author-name {
+        .fb-post-user-info {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .fb-post-name {
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
-        .author-badge {
+        .fb-post-time {
             font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: #eee;
-            margin-left: 5px;
+            color: #65676b;
         }
-        .badge-elite { background: #ffebee; color: #e41e3f; font-weight: bold; }
-        
-        .post-content {
-            font-size: 1rem;
-            color: #050505;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        /* Bouton de modération pour l'Élite */
-        .btn-delete-elite {
+        .badge-elite {
             background: #ffebee;
             color: #e41e3f;
-            border: 1px solid #ffcdd2;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+        .fb-post-body {
+            padding: 0 16px 12px 16px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #050505;
+        }
+        .fb-post-footer {
+            border-top: 1px solid #e4e6eb;
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0;
+            color: #65676b;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Bouton de suppression Élites */
+        .elite-delete-btn {
+            background: #ffebee;
+            color: #e41e3f;
+            border: none;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
+            font-size: 0.75rem;
             font-weight: bold;
-        }
-        .btn-delete-elite:hover {
-            background: #e41e3f;
-            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- Barre de navigation type Facebook (En Rouge et Blanc) -->
+    <!-- Barre de navigation supérieure -->
     <header>
         <div class="logo">Hiérarchie</div>
-        <div class="nav-center">
-            <button class="nav-btn active">🏠 Fil d'actu</button>
-            <button class="nav-btn">🛒 Marché</button>
-            <button class="nav-btn">👑 Le Sommet</button>
+        <div class="nav-icons">
+            <button class="nav-icon">🏠</button>
+            <button class="nav-icon">👑</button>
+            <button class="nav-icon">🛒</button>
+            <button class="nav-icon">⚙️</button>
         </div>
-        <div class="user-status">Statut : 🔥 Élite (Admin)</div>
     </header>
 
-    <!-- Contenu Principal -->
-    <main>
-        <div class="feed">
-            <!-- Bloc pour poster -->
-            <div class="create-post">
-                <textarea id="postInput" placeholder="Exprimez-vous sur Hiérarchie..."></textarea>
-                <div class="post-actions-bar">
-                    <button class="btn-red" onclick="createPost()">Publier</button>
-                </div>
+    <div class="main-container">
+        <!-- Boîte de publication style FB -->
+        <div class="fb-create-box">
+            <div class="fb-create-top">
+                <div class="fb-avatar">H</div>
+                <input type="text" id="postInput" class="fb-input-fake" placeholder="Exprimez-vous au sommet ou subissez..." onkeypress="checkEnter(event)">
             </div>
+            <div class="fb-create-bottom">
+                <button class="fb-action-btn">🔴 Vidéo en direct</button>
+                <button class="fb-action-btn" onclick="createPost()">📸 Photo/vidéo</button>
+                <button class="fb-action-btn">🔥 Humeur</button>
+            </div>
+        </div>
 
-            <!-- Liste des publications -->
-            <div id="postsContainer">
-                <!-- Post exemple -->
-                <div class="post" id="post-1">
-                    <div class="post-header">
+        <!-- Flux de posts -->
+        <div id="feedContainer">
+            <div class="fb-post" id="post-1">
+                <div class="fb-post-header">
+                    <div class="fb-post-user-info">
+                        <div class="fb-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">TL</div>
                         <div>
-                            <span class="author-name">Thomas Leroy</span>
-                            <span class="author-badge">Plebe</span>
+                            <div class="fb-post-name">Thomas Leroy <span class="badge-elite" style="background:#f0f2f5; color:#65676b;">Plebe</span></div>
+                            <div class="fb-post-time">Il y a 2 minutes</div>
                         </div>
-                        <!-- Le pouvoir des élites : supprimer ce post -->
-                        <button class="btn-delete-elite" onclick="deletePost('post-1')">⚡ Supprimer (Élite)</button>
                     </div>
-                    <div class="post-content">
-                        Salut tout le monde, je viens de m'inscrire sur Hiérarchie ! J'espère que mon post ne va pas se faire censurer par les riches du sommet.
-                    </div>
+                    <!-- Pouvoir des Élites -->
+                    <button class="elite-delete-btn" onclick="removePost('post-1')">⚡ Supprimer (Élite)</button>
+                </div>
+                <div class="fb-post-body">
+                    Est-ce que les membres du sommet vont encore supprimer mon message ? Test de résistance sur Hiérarchie.
+                </div>
+                <div class="fb-post-footer">
+                    <div>👍 J'aime</div>
+                    <div>💬 Commenter</div>
+                    <div>↗️ Partager</div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script>
-        // Fonction pour publier un message
         function createPost() {
             const text = document.getElementById('postInput').value;
             if(!text.trim()) return;
 
-            const container = document.getElementById('postsContainer');
+            const container = document.getElementById('feedContainer');
             const postId = 'post-' + Date.now();
 
             const postHTML = `
-                <div class="post" id="${postId}">
-                    <div class="post-header">
-                        <div>
-                            <span class="author-name">Utilisateur Actuel</span>
-                            <span class="author-badge badge-elite">Élite</span>
+                <div class="fb-post" id="${postId}">
+                    <div class="fb-post-header">
+                        <div class="fb-post-user-info">
+                            <div class="fb-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">MOI</div>
+                            <div>
+                                <div class="fb-post-name">Moi <span class="badge-elite">Élite</span></div>
+                                <div class="fb-post-time">À l'instant</div>
+                            </div>
                         </div>
-                        <button class="btn-delete-elite" onclick="deletePost('${postId}')">⚡ Supprimer (Élite)</button>
+                        <button class="elite-delete-btn" onclick="removePost('${postId}')">⚡ Supprimer (Élite)</button>
                     </div>
-                    <div class="post-content">${text}</div>
+                    <div class="fb-post-body">${text}</div>
+                    <div class="fb-post-footer">
+                        <div>👍 J'aime</div>
+                        <div>💬 Commenter</div>
+                        <div>↗️ Partager</div>
+                    </div>
                 </div>
             `;
 
@@ -232,16 +263,15 @@
             document.getElementById('postInput').value = '';
         }
 
-        // Fonction de suppression (Le pouvoir de l'Élite)
-        function deletePost(id) {
-            const postElement = document.getElementById(id);
-            if(postElement) {
-                postElement.style.transition = "0.3s";
-                postElement.style.opacity = "0";
-                setTimeout(() => {
-                    postElement.remove();
-                }, 300);
+        function checkEnter(e) {
+            if(e.key === 'Enter') {
+                createPost();
             }
+        }
+
+        function removePost(id) {
+            const el = document.getElementById(id);
+            if(el) el.remove();
         }
     </script>
 
