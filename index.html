@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destinée & Numérologie - Rapport Exclusif</title>
+    <title>Destinée & Numérologie - Révélation Personnelle</title>
     <style>
         * {
             margin: 0;
@@ -25,7 +25,7 @@
             padding: 40px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             border: 1px solid #c5a059;
             text-align: center;
@@ -60,18 +60,14 @@
             color: #fff;
             font-size: 1rem;
         }
-        .price-tag {
-            font-size: 1.5rem;
-            color: #66fcf1;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        .btn-stripe {
+        .btn-main {
             display: block;
             width: 100%;
             padding: 15px;
             background: linear-gradient(135deg, #c5a059 0%, #997430 100%);
             color: #fff;
+            border: none;
+            cursor: pointer;
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: bold;
@@ -79,12 +75,46 @@
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
         }
-        .btn-stripe:hover {
+        .btn-main:hover {
             opacity: 0.9;
             transform: translateY(-2px);
         }
+        .hidden {
+            display: none;
+        }
+        .loader {
+            border: 4px solid #0b0c10;
+            border-top: 4px solid #66fcf1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result-box {
+            text-align: left;
+            background: #0b0c10;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #45a29e;
+            margin-bottom: 25px;
+        }
+        .result-box h3 {
+            color: #66fcf1;
+            margin-bottom: 10px;
+        }
+        .price-tag {
+            font-size: 1.5rem;
+            color: #66fcf1;
+            margin: 15px 0;
+            font-weight: bold;
+        }
         .footer-note {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 0.8rem;
             color: #888;
         }
@@ -93,36 +123,83 @@
 <body>
 
     <div class="container">
-        <h1>Découvrez votre Destinée</h1>
-        <p>Entrez vos coordonnées pour générer votre analyse numérologique personnalisée et révéler les 3 grands tournants de votre année.</p>
-        
-        <div class="form-group">
-            <label for="name">Votre Prénom :</label>
-            <input type="text" id="name" placeholder="Ex: Thomas">
+        <!-- ÉTAPE 1 : LE FORMULAIRE -->
+        <div id="step-form">
+            <h1>Révélez votre Destinée</h1>
+            <p>Entrez vos informations pour lancer le calcul astrologique et numérologique instantané de votre profil.</p>
+            
+            <div class="form-group">
+                <label for="name">Votre Prénom :</label>
+                <input type="text" id="name" placeholder="Ex: Thomas">
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Votre Date de Naissance :</label>
+                <input type="date" id="dob">
+            </div>
+
+            <button class="btn-main" onclick="startAnalysis()">Calculer mon thème gratuit</button>
         </div>
 
-        <div class="form-group">
-            <label for="dob">Votre Date de Naissance :</label>
-            <input type="date" id="dob">
+        <!-- ÉTAPE 2 : LE CHARGEMENT (FAUX CALCUL) -->
+        <div id="step-loader" class="hidden">
+            <h1>Analyse cosmique en cours...</h1>
+            <p>Connexion aux cycles planétaires et calcul de votre chemin de vie...</p>
+            <div class="loader"></div>
         </div>
 
-        <div class="price-tag">9,90 € <span style="font-size:0.9rem; text-decoration:line-through; color:#888;">29,00 €</span></div>
+        <!-- ÉTAPE 3 : LE RÉSULTAT PARTIEL + APPEL À L'ACHAT -->
+        <div id="step-result" class="hidden">
+            <h1>Analyse prête pour <span id="userName" style="color:#66fcf1;"></span> !</h1>
+            <p>D'après votre date de naissance, voici vos premières tendances vibratoires :</p>
+            
+            <div class="result-box">
+                <h3>⚡ Votre Vibration Dominante : Révélation & Transformation</h3>
+                <p id="userVibe">Une année charnière s'ouvre devant vous. Des choix décisifs sur le plan professionnel et personnel vont s'imposer d'ici les 3 prochains mois.</p>
+                <br>
+                <p style="color: #c5a059; font-style: italic;">⚠️ Attention : Un blocage énergétique a été détecté dans votre secteur relationnel. Le rapport complet détaille comment le contourner.</p>
+            </div>
 
-        <!-- REMplace le lien ci-dessous par ton vrai lien Stripe -->
-        <a href="TON_LIEN_STRIPE_ICI" class="btn-stripe" id="payButton">Obtenir mon rapport complet</a>
+            <p>Pour lire l'intégralité de votre rapport détaillé (15 pages avec les prévisions mois par mois) :</p>
 
-        <div class="footer-note">🔒 Paiement sécurisé via Stripe • Résultat immédiat</div>
+            <div class="price-tag">9,90 € <span style="font-size:0.9rem; text-decoration:line-through; color:#888;">29,00 €</span></div>
+
+            <!-- REMPLACE le lien ci-dessous par ton vrai lien Stripe -->
+            <a href="TON_LIEN_STRIPE_ICI" class="btn-main">Débloquer mon rapport complet (Stripe)</a>
+
+            <div class="footer-note">🔒 Paiement 100% sécurisé • Accès immédiat au PDF</div>
+        </div>
     </div>
 
     <script>
-        // Petite sécurité pour s'assurer que le prénom est rempli avant d'aller sur Stripe
-        document.getElementById('payButton').addEventListener('click', function(e) {
+        function startAnalysis() {
             const name = document.getElementById('name').value;
-            if(!name) {
-                e.preventDefault();
-                alert("Veuillez entrer votre prénom pour continuer.");
+            const dob = document.getElementById('dob').value;
+
+            if(!name || !dob) {
+                alert("Veuillez remplir tous les champs pour lancer l'analyse.");
+                return;
             }
-        });
+
+            // Cache le formulaire et affiche le loader
+            document.getElementById('step-form').classList.add('hidden');
+            document.getElementById('step-loader').classList.remove('hidden');
+
+            // Simule un calcul de 2.5 secondes pour faire "vrai"
+            setTimeout(function() {
+                document.getElementById('userName').innerText = name;
+                
+                // Personnalise un tout petit peu la vibe selon le mois de naissance pour faire illusion
+                const month = dob.split('-')[1];
+                if(month >= 6) {
+                    document.getElementById('userVibe').innerText = "Une puissante énergie de concrétisation financière et d'opportunités inattendues se dessine pour vous cette saison.";
+                }
+
+                // Cache le loader et affiche le résultat
+                document.getElementById('step-loader').classList.add('hidden');
+                document.getElementById('step-result').classList.remove('hidden');
+            }, 2500);
+        }
     </script>
 
 </body>
