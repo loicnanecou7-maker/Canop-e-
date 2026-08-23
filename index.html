@@ -1,304 +1,759 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Canopé — Collection mondiale</title>
-<style>
-:root{
-  --bg:#f4f8ef; --panel:rgba(255,255,255,.88); --white:#fff;
-  --green:#146b46; --green2:#2f9b5e; --lime:#9edb74;
-  --deep:#0c3f2b; --gold:#c69b45; --bronze:#9a6a3a;
-  --text:#173126; --muted:#678073; --border:rgba(25,84,55,.12);
-  --shadow:0 18px 60px rgba(15,65,40,.14);
-}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);overflow:hidden;background:var(--bg)}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CANOPÉE — Adoptez un arbre, changez le monde</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.app{height:100vh;display:flex;flex-direction:column}
-.topbar{
-  height:76px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);
-  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
-  border-bottom:1px solid var(--border);position:relative;z-index:20
-}
-.brand{display:flex;align-items:center;gap:12px;font-size:25px;font-weight:900;letter-spacing:-1px}
-.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;display:grid;place-items:center;box-shadow:0 10px 25px rgba(20,107,70,.25)}
-.nav{display:flex;gap:8px}
-.nav button,.icon-btn{
-  padding:11px 16px;border-radius:12px;background:transparent;color:var(--muted);
-  transition:.25s
-}
-.nav button:hover,.nav button.active{background:#e8f5e7;color:var(--green)}
-.userbar{display:flex;align-items:center;gap:10px}
-.mode-badge{font-size:11px;font-weight:900;letter-spacing:.8px;padding:8px 10px;border-radius:999px;background:#eaf7e7;color:var(--green)}
-.god{display:none;background:linear-gradient(135deg,var(--gold),var(--bronze))!important;color:#fff!important}
-.god.visible{display:block}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d7f0c7,#76b970);display:grid;place-items:center;font-weight:900}
+        :root {
+            --green: #176b48;
+            --green-light: #59b36c;
+            --green-pale: #e9f5e8;
+            --ink: #173126;
+            --gold: #b88732;
+            --gold-light: #f5d98a;
+            --card: #ffffff;
+            --shadow: rgba(23, 49, 38, 0.15);
+            --radius: 20px;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
 
-.main{flex:1;position:relative;min-height:0}
-.map-wrap{position:absolute;inset:0;overflow:hidden;background:linear-gradient(180deg,#e7f7f4,#dff0e2);touch-action:none}
-.map{
-  position:absolute;inset:-15%;min-width:130%;min-height:130%;
-  transform-origin:center center;cursor:grab;
-  background:
-    radial-gradient(ellipse at 23% 28%,rgba(43,139,91,.18) 0 6%,transparent 6.3%),
-    radial-gradient(ellipse at 70% 31%,rgba(38,129,80,.18) 0 7%,transparent 7.3%),
-    radial-gradient(ellipse at 51% 68%,rgba(37,124,73,.18) 0 6%,transparent 6.3%),
-    radial-gradient(circle at 35% 60%,rgba(255,255,255,.7) 0 2px,transparent 3px);
-  background-size:auto,auto,auto,52px 52px;
-}
-.map.dragging{cursor:grabbing}
-.ocean-label{position:absolute;color:rgba(18,91,70,.22);font-size:28px;font-weight:800;letter-spacing:8px}
-.continent{
-  position:absolute;background:linear-gradient(145deg,#d1e6b7,#9ac98a);
-  border:2px solid rgba(48,113,62,.13);filter:drop-shadow(0 14px 10px rgba(34,95,56,.08));
-  opacity:.92
-}
-.na{width:25%;height:30%;left:8%;top:17%;clip-path:polygon(5% 18%,26% 0,70% 8%,100% 37%,78% 68%,58% 98%,27% 85%,8% 53%)}
-.sa{width:14%;height:30%;left:29%;top:49%;clip-path:polygon(20% 0,80% 8%,100% 35%,77% 91%,44% 100%,8% 43%)}
-.eu{width:15%;height:15%;left:48%;top:18%;clip-path:polygon(0 39%,24% 8%,76% 0,100% 41%,78% 100%,31% 87%)}
-.af{width:18%;height:33%;left:47%;top:37%;clip-path:polygon(30% 0,80% 12%,100% 52%,69% 100%,22% 87%,0 36%)}
-.as{width:31%;height:31%;left:60%;top:17%;clip-path:polygon(0 28%,19% 4%,82% 0,100% 34%,88% 73%,49% 100%,7% 74%)}
-.au{width:16%;height:14%;left:78%;top:65%;clip-path:polygon(11% 18%,68% 0,100% 43%,80% 88%,28% 100%,0 55%)}
-.region-label{position:absolute;color:rgba(20,78,48,.45);font-size:12px;font-weight:900;letter-spacing:1.5px}
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font-body);
+            background: var(--green-pale);
+            color: var(--ink);
+            touch-action: none;
+        }
 
-.tree-marker{position:absolute;transform:translate(-50%,-50%);z-index:5;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;transition:.25s;animation:float 3s ease-in-out infinite}
-.tree-marker::before{content:"";position:absolute;inset:0;border-radius:50%;background:#fff;box-shadow:0 0 0 8px rgba(255,255,255,.28),0 10px 25px rgba(10,70,42,.25)}
-.tree-marker span{position:relative;font-size:23px}
-.tree-marker:hover{transform:translate(-50%,-50%) scale(1.22);z-index:9}
-.tree-marker.common::after,.tree-marker.rare::after,.tree-marker.epic::after,.tree-marker.ephemeral::after{content:"";position:absolute;inset:-6px;border-radius:50%;z-index:-1}
-.common::after{border:2px solid #72ba71}.rare::after{border:2px solid #38a7d5;box-shadow:0 0 18px rgba(56,167,213,.5)}
-.epic::after{border:2px solid var(--gold);box-shadow:0 0 25px rgba(198,155,69,.65);animation:pulse 1.8s infinite}
-.ephemeral::after{border:2px solid #f0794f;box-shadow:0 0 25px rgba(240,121,79,.7);animation:pulse 1.2s infinite}
-@keyframes float{50%{margin-top:-8px}}@keyframes pulse{50%{transform:scale(1.16);opacity:.45}}
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
 
-.map-controls{position:absolute;right:22px;bottom:24px;display:grid;gap:8px;z-index:10}
-.control{width:46px;height:46px;border-radius:14px;background:var(--panel);box-shadow:var(--shadow);font-size:20px;color:var(--green);transition:.2s}
-.control:hover{transform:scale(1.07);background:var(--green);color:#fff}
+        /* ===== APP ===== */
+        .app {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
 
-.hud{position:absolute;left:24px;top:24px;z-index:10;display:flex;gap:10px}
-.stat-pill{background:var(--panel);backdrop-filter:blur(15px);padding:12px 16px;border-radius:16px;box-shadow:0 8px 30px rgba(20,80,50,.09);font-size:12px}
-.stat-pill b{display:block;font-size:18px;color:var(--green)}
+        /* ===== HEADER ===== */
+        header {
+            height: 72px;
+            flex: 0 0 auto;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 1px 20px rgba(21, 69, 37, 0.10);
+            z-index: 50;
+            border-bottom: 1px solid rgba(23, 49, 38, 0.06);
+        }
 
-.bottom-tip{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(12,63,43,.82);backdrop-filter:blur(10px);color:#fff;padding:11px 17px;border-radius:999px;font-size:12px;z-index:10}
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 26px;
+            font-weight: 900;
+            font-family: var(--font-display);
+        }
 
-.side{
-  position:absolute;right:24px;top:96px;bottom:24px;width:360px;background:var(--panel);
-  backdrop-filter:blur(20px);border:1px solid var(--border);box-shadow:var(--shadow);
-  border-radius:26px;padding:22px;overflow:auto;z-index:12;display:none
-}
-.side.show{display:block;animation:slide .35s ease}@keyframes slide{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
-.close{float:right;background:#edf6eb;border-radius:50%;width:34px;height:34px;color:var(--green)}
-.tree-image{width:100%;height:185px;border-radius:20px;object-fit:cover;margin:14px 0}
-.tag{display:inline-block;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;margin:4px 4px 4px 0}
-.common-tag{background:#e3f4df;color:#377d39}.rare-tag{background:#e1f5fb;color:#20799b}.epic-tag{background:#fff4d9;color:#a46f10}.ephemeral-tag{background:#fff0e9;color:#c15831}
-.price{font-size:32px;font-weight:900;color:var(--green);margin:12px 0}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-.mini-stat{background:#f2f8f0;padding:12px;border-radius:14px}.mini-stat span{display:block;font-size:11px;color:var(--muted)}.mini-stat b{font-size:16px}
-.primary{width:100%;padding:15px;border-radius:15px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;font-weight:800;box-shadow:0 12px 25px rgba(20,107,70,.2);transition:.25s}
-.primary:hover{transform:translateY(-2px);filter:brightness(1.05)}
-.secondary{padding:12px;border-radius:12px;background:#edf5e9;color:var(--green);font-weight:800}
-.danger{background:#fff0ed;color:#c34e32;padding:11px;border-radius:12px;font-weight:800}
-.admin-actions{display:flex;gap:8px;margin-top:14px}.admin-actions button{flex:1}
-.timer{background:#fff5ed;color:#c55c35;padding:11px;border-radius:12px;font-weight:800;margin:10px 0;text-align:center}
+        .brand .logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            color: #fff;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(23, 107, 72, 0.25);
+        }
 
-.overlay{position:fixed;inset:0;background:rgba(7,44,30,.35);backdrop-filter:blur(6px);z-index:100;display:none;place-items:center;padding:20px}
-.overlay.show{display:grid}
-.modal{width:min(500px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;padding:26px;box-shadow:0 30px 100px rgba(0,0,0,.22);animation:pop .25s ease}
-@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-.modal h2{margin:0 0 6px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:800;color:var(--muted)}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #dce8d8;outline:none;background:#fbfdf9}
-.field textarea{min-height:80px;resize:vertical}
-.modal-actions{display:flex;gap:10px;margin-top:16px}.modal-actions>*{flex:1}
-.checkout-summary{display:flex;gap:12px;background:#f3f8f0;padding:12px;border-radius:16px;margin:16px 0}.checkout-summary img{width:72px;height:72px;object-fit:cover;border-radius:12px}
-.card-box{padding:14px;border:1px solid #d9e5d6;border-radius:14px;background:#fafcf9;color:#587062;font-size:13px}
-.stripe{font-weight:900;color:#635bff;font-size:19px}
+        .brand span {
+            color: var(--green);
+        }
 
-.wallet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.wallet-grid div{background:#f0f7ee;padding:10px;border-radius:12px}.wallet-grid span{display:block;font-size:10px;color:var(--muted)}.wallet-grid b{font-size:15px}
-.collection-card{display:flex;gap:10px;padding:10px;background:#f7faf5;border-radius:15px;margin:8px 0}.collection-card img{width:58px;height:58px;object-fit:cover;border-radius:11px}.collection-card small{color:var(--muted)}
-.admin-panel{position:absolute;left:24px;bottom:70px;z-index:13;width:300px;background:rgba(255,255,255,.93);border-radius:20px;padding:16px;box-shadow:var(--shadow);display:none}.admin-panel.show{display:block}
-.admin-panel h3{margin:0 0 10px}.admin-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.admin-stats div{background:#edf6ea;padding:10px;border-radius:11px;font-size:11px}.admin-stats b{display:block;font-size:18px;color:var(--green)}
-.admin-tip{font-size:11px;color:var(--muted);margin-top:12px}
-.toast{position:fixed;top:92px;left:50%;transform:translateX(-50%) translateY(-20px);background:#164b34;color:#fff;padding:13px 20px;border-radius:999px;z-index:200;opacity:0;pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.empty{text-align:center;color:var(--muted);padding:30px 10px}
-.hidden{display:none!important}
+        nav {
+            display: flex;
+            gap: 6px;
+        }
 
-@media(max-width:760px){
-  .topbar{padding:0 12px;height:66px}.brand{font-size:20px}.logo{width:36px;height:36px}
-  .nav button{padding:8px;font-size:11px}.avatar{display:none}.hud{left:12px;top:12px}.stat-pill{padding:8px 10px}.stat-pill b{font-size:15px}
-  .side{left:10px;right:10px;bottom:10px;top:auto;width:auto;max-height:72vh}.bottom-tip{font-size:10px;bottom:12px}.map-controls{right:12px;bottom:65px}
-  .admin-panel{left:10px;bottom:10px;width:calc(100% - 20px)}.mode-badge{display:none}
-}
-</style>
-</head>
-<body>
-<div class="app">
-  <header class="topbar">
-    <div class="brand"><div class="logo">🌿</div>Canopé</div>
-    <nav class="nav">
-      <button class="active" data-view="map">🌍 Explorer</button>
-      <button data-view="wallet">🌳 Ma Canopée</button>
-      <button id="adminToggle" title="God Mode">✦ Admin</button>
-    </nav>
-    <div class="userbar">
-      <div class="mode-badge" id="modeBadge">MODE EXPLORATEUR</div>
-      <button class="icon-btn god" id="godExit">Quitter God Mode</button>
-      <div class="avatar">C</div>
-    </div>
-  </header>
+        nav button {
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: transparent;
+            color: #587064;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            white-space: nowrap;
+        }
 
-  <main class="main">
-    <section class="map-wrap" id="mapWrap">
-      <div class="map" id="map">
-        <div class="continent na"></div><div class="continent sa"></div><div class="continent eu"></div>
-        <div class="continent af"></div><div class="continent as"></div><div class="continent au"></div>
-        <div class="ocean-label" style="left:38%;top:42%">ATLANTIQUE</div>
-        <div class="ocean-label" style="left:70%;top:53%">PACIFIQUE</div>
-        <span class="region-label" style="left:19%;top:31%">AMAZONIE NORD</span>
-        <span class="region-label" style="left:50%;top:25%">EUROPE</span>
-        <span class="region-label" style="left:70%;top:34%">ASIE</span>
-        <span class="region-label" style="left:53%;top:54%">AFRIQUE</span>
-        <div id="markers"></div>
-      </div>
-    </section>
+        nav button:hover {
+            background: var(--green-pale);
+            color: var(--green);
+        }
 
-    <div class="hud">
-      <div class="stat-pill"><span>Arbres découverts</span><b id="hudTrees">0</b></div>
-      <div class="stat-pill"><span>Ta collection</span><b id="hudOwned">0</b></div>
-      <div class="stat-pill"><span>CO₂ virtuel</span><b id="hudCO2">0 kg</b></div>
-    </div>
+        nav button.active {
+            background: var(--green);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(23, 107, 72, 0.25);
+        }
 
-    <div class="map-controls">
-      <button class="control" id="zoomIn">+</button>
-      <button class="control" id="zoomOut">−</button>
-      <button class="control" id="resetMap">⌖</button>
-    </div>
+        nav button.adminBtn {
+            background: #fff5df !important;
+            color: #9b6c1e !important;
+        }
 
-    <div class="bottom-tip" id="mapTip">Explore la planète et découvre les arbres rares 🌿</div>
+        nav button.adminBtn.active {
+            background: var(--gold) !important;
+            color: #fff !important;
+        }
 
-    <aside class="side" id="treePanel"></aside>
-    <aside class="side" id="walletPanel"></aside>
+        /* ===== MAIN ===== */
+        .main {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
 
-    <section class="admin-panel" id="adminPanel">
-      <h3>✦ God Mode</h3>
-      <div class="admin-stats">
-        <div>Arbres<b id="aTotal">0</b></div>
-        <div>Vendus<b id="aSold">0</b></div>
-        <div>CA simulé<b id="aRevenue">0 €</b></div>
-        <div>Disponibles<b id="aAvailable">0</b></div>
-      </div>
-      <p class="admin-tip">Clique sur la carte pour spawner un arbre. Clique sur un arbre pour le modifier.</p>
-    </section>
-  </main>
-</div>
+        /* ===== MAP ===== */
+        #map {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            touch-action: none;
+            cursor: grab;
+            background:
+                radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.4) 0 2px, transparent 3px),
+                radial-gradient(ellipse at 50% 55%, #c7e8d7 0%, #eaf7ee 52%, #d9eee3 100%);
+            background-size: 95px 95px, 100% 100%;
+        }
 
-<div class="overlay" id="checkoutOverlay"><div class="modal" id="checkoutModal"></div></div>
-<div class="overlay" id="adminOverlay"><div class="modal" id="adminModal"></div></div>
-<div class="toast" id="toast"></div>
+        #map:active {
+            cursor: grabbing;
+        }
 
-<script>
-const STORAGE_KEY = "canope-v1";
+        #world {
+            position: absolute;
+            inset: -10%;
+            width: 120%;
+            height: 120%;
+            transform-origin: center;
+            transition: transform 0.05s linear;
+        }
 
-const defaults = [
-  {id:"t1",name:"Séquoia du Pacifique",region:"Amérique du Nord",x:18,y:34,rarity:"epic",price:890,co2:48,bonus:"+18% Prestige",sold:false,image:"https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=85",description:"Un gardien colossal inspiré des anciennes forêts du Pacifique."},
-  {id:"t2",name:"Cèdre de l'Atlas",region:"Afrique du Nord",x:55,y:48,rarity:"rare",price:245,co2:31,bonus:"+9% Canopée",sold:false,image:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1000&q=85",description:"Une essence majestueuse adaptée aux reliefs méditerranéens."},
-  {id:"t3",name:"Kapok Amazonien",region:"Amazonie",x:34,y:62,rarity:"common",price:79,co2:18,bonus:"+3% Collection",sold:false,image:"https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1000&q=85",description:"Un arbre emblématique des immenses canopées tropicales."},
-  {id:"t4",name:"Baobab Éphémère",region:"Afrique",x:58,y:58,rarity:"ephemeral",price:399,co2:39,bonus:"+25% Événement",sold:false,expiresAt:Date.now()+1000*60*60*5,image:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1000&q=85",description:"Une apparition rare, disponible seulement pendant quelques heures."},
-  {id:"t5",name:"Sakura Impérial",region:"Japon",x:80,y:35,rarity:"epic",price:1200,co2:27,bonus:"+35% Prestige",sold:false,image:"https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1000&q=85",description:"Une pièce de collection virtuelle aux floraisons spectaculaires."},
-  {id:"t6",name:"Eucalyptus Austral",region:"Australie",x:84,y:71,rarity:"rare",price:315,co2:34,bonus:"+11% Croissance",sold:false,image:"https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&w=1000&q=85",description:"Une essence lumineuse venue des vastes paysages australiens."}
-];
+        /* ===== CONTINENTS ===== */
+        .land {
+            position: absolute;
+            background: linear-gradient(145deg, #d4e8b7, #9ecb8b);
+            border: 1px solid rgba(78, 140, 100, 0.2);
+            box-shadow: 0 15px 30px rgba(46, 116, 68, 0.15);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
 
-let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || {
-  trees: defaults, owned: [], revenue: 0, admin: false
-};
-let selectedTree = null, pendingCoords = null;
-let scale = 1, tx = 0, ty = 0, dragging = false, startX, startY, startTX, startTY;
+        .land:hover {
+            box-shadow: 0 20px 40px rgba(46, 116, 68, 0.2);
+            filter: brightness(1.02);
+        }
 
-const $ = id => document.getElementById(id);
-const save = () => localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
-const rarityLabel = r => ({common:"Base / Commun",rare:"Rare",epic:"Épique",ephemeral:"Éphémère"})[r];
-const rarityEmoji = r => ({common:"🌱",rare:"🌲",epic:"🌳",ephemeral:"✨"})[r];
-const money = n => new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR"}).format(n);
+        .na {
+            left: 9%;
+            top: 17%;
+            width: 26%;
+            height: 30%;
+            clip-path: polygon(5% 20%, 30% 0, 72% 9%, 100% 37%, 77% 70%, 59% 100%, 25% 83%, 8% 53%);
+        }
 
-function toast(msg){
-  const t=$("toast");t.textContent=msg;t.classList.add("show");
-  clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2800);
-}
+        .sa {
+            left: 30%;
+            top: 48%;
+            width: 14%;
+            height: 34%;
+            clip-path: polygon(20% 0, 80% 10%, 100% 35%, 75% 93%, 40% 100%, 7% 43%);
+        }
 
-function validTree(t){ return !(t.rarity==="ephemeral" && t.expiresAt && t.expiresAt<=Date.now()); }
+        .eu {
+            left: 48%;
+            top: 19%;
+            width: 15%;
+            height: 14%;
+            clip-path: polygon(0 39%, 25% 8%, 78% 0, 100% 42%, 77% 100%, 30% 87%);
+        }
 
-function renderMarkers(){
-  $("markers").innerHTML="";
-  state.trees.filter(validTree).forEach(tree=>{
-    const b=document.createElement("button");
-    b.className=`tree-marker ${tree.rarity}`;
-    b.style.left=tree.x+"%"; b.style.top=tree.y+"%";
-    b.innerHTML=`<span>${rarityEmoji(tree.rarity)}</span>`;
-    b.title=tree.name;
-    b.onclick=e=>{e.stopPropagation();selectedTree=tree;showTree(tree)};
-    $("markers").appendChild(b);
-  });
-  updateHUD();
-}
+        .af {
+            left: 48%;
+            top: 37%;
+            width: 18%;
+            height: 34%;
+            clip-path: polygon(30% 0, 80% 12%, 100% 53%, 70% 100%, 22% 87%, 0 36%);
+        }
 
-function updateHUD(){
-  const owned=state.trees.filter(t=>state.owned.includes(t.id));
-  $("hudTrees").textContent=state.trees.filter(validTree).length;
-  $("hudOwned").textContent=owned.length;
-  $("hudCO2").textContent=owned.reduce((a,t)=>a+t.co2,0)+" kg";
-  $("aTotal").textContent=state.trees.length;
-  $("aSold").textContent=state.trees.filter(t=>t.sold).length;
-  $("aRevenue").textContent=money(state.revenue);
-  $("aAvailable").textContent=state.trees.filter(t=>!t.sold&&validTree(t)).length;
-}
+        .as {
+            left: 60%;
+            top: 18%;
+            width: 31%;
+            height: 31%;
+            clip-path: polygon(0 28%, 20% 4%, 83% 0, 100% 34%, 88% 74%, 49% 100%, 7% 74%);
+        }
 
-function countdown(t){
-  if(!t.expiresAt)return "";
-  const d=Math.max(0,t.expiresAt-Date.now());
-  const h=Math.floor(d/3600000),m=Math.floor((d%3600000)/60000),s=Math.floor((d%60000)/1000);
-  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
+        .au {
+            left: 78%;
+            top: 66%;
+            width: 16%;
+            height: 14%;
+            clip-path: polygon(10% 18%, 68% 0, 100% 43%, 80% 88%, 28% 100%, 0 55%);
+        }
 
-function showTree(t){
-  $("walletPanel").classList.remove("show");
-  const panel=$("treePanel");panel.classList.add("show");
-  const expired=!validTree(t), owned=state.owned.includes(t.id);
-  panel.innerHTML=`
-    <button class="close" onclick="closePanels()">×</button>
-    <img class="tree-image" src="${t.image}" alt="${t.name}">
-    <div class="tag ${t.rarity}-tag">${rarityLabel(t.rarity)}</div>
-    <h2>${t.name}</h2><p style="color:var(--muted)">📍 ${t.region}</p>
-    ${t.rarity==="ephemeral"?`<div class="timer">⏳ ${expired?"DISPARU":countdown(t)}</div>`:""}
-    <p>${t.description||"Une pièce unique de la collection Canopé."}</p>
-    <div class="stats-grid">
-      <div class="mini-stat"><span>CO₂ virtuel</span><b>${t.co2} kg</b></div>
-      <div class="mini-stat"><span>Bonus</span><b>${t.bonus}</b></div>
-    </div>
-    <div class="price">${money(t.price)}</div>
-    ${owned?`<button class="primary" disabled>✓ Dans ta Canopée</button>`:
-      t.sold?`<button class="secondary" disabled>Déjà acquis</button>`:
-      expired?`<button class="secondary" disabled>Arbre disparu</button>`:
-      `<button class="primary" onclick="openCheckout('${t.id}')">Acheter cet arbre</button>`}
-    ${state.admin?`<div class="admin-actions">
-      <button class="secondary" onclick="openAdminEdit('${t.id}')">Modifier</button>
-      <button class="danger" onclick="deleteTree('${t.id}')">Supprimer</button>
-    </div>`:""}
-  `;
-}
-function closePanels(){$("treePanel").classList.remove("show");$("walletPanel").classList.remove("show")}
+        .label {
+            position: absolute;
+            font-size: clamp(11px, 1.8vw, 17px);
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: rgba(35, 98, 68, 0.5);
+            pointer-events: none;
+            font-family: var(--font-display);
+            text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
+        }
 
-function openCheckout(id){
-  const t=state.trees.find(x=>x.id===id); if(!t)return;
-  $("checkoutModal").innerHTML=`
-    <button class="close" onclick="closeCheckout()">×</button>
-    <h2>Finaliser l'acquisition</h2>
-    <p style="color:var(--muted)">Paiement sécurisé — simulation Stripe</p>
-    <div class="checkout-summary"><img src="${t.image}"><div><b>${t.name}</b><br><span class="tag ${t.rarity}-tag">${rarityLabel(t.rarity)}</span><h3>${money(t.price)}</h3></div></div>
-    <div class="card-box"><span class="stripe">stripe</span><br><br>💳 Carte bancaire — Mode démonstration<br><small>Aucun paiement réel n'est effectué.</small></div>
-    <button class="primary" style="margin-top:16px" onclick="completePurchase('${t.id}')">Payer ${money(t.price)} →</button>
-  `;
-  $("checkoutOverlay").classList.add("show");
-}
-function closeCheckout(){$("checkoutO
+        /* ===== MARKERS ===== */
+        #markers {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(23, 79, 48, 0.25);
+            z-index: 20;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-family: var(--font-body);
+        }
+
+        .marker:hover,
+        .marker:active {
+            transform: translate(-50%, -50%) scale(1.18);
+            z-index: 25;
+        }
+
+        .marker.common {
+            outline: 3px solid #74b96d;
+            outline-offset: 2px;
+        }
+
+        .marker.rare {
+            outline: 3px solid #2ca4d2;
+            outline-offset: 2px;
+        }
+
+        .marker.epic {
+            outline: 3px solid #d3a13c;
+            outline-offset: 2px;
+            animation: epicPulse 2.6s ease-in-out infinite;
+        }
+
+        .marker.ephemeral {
+            outline: 3px solid #ef7d4e;
+            outline-offset: 2px;
+            animation: ephemeralPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes epicPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(211, 161, 60, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(211, 161, 60, 0.5);
+            }
+        }
+
+        @keyframes ephemeralPulse {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(239, 125, 78, 0.3);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(239, 125, 78, 0.6);
+                transform: translate(-50%, -50%) scale(1.08);
+            }
+        }
+
+        .marker.owned {
+            outline-color: var(--green) !important;
+            box-shadow: 0 0 0 8px rgba(23, 107, 72, 0.2), 0 8px 20px rgba(23, 79, 48, 0.25) !important;
+        }
+
+        .marker .tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            font-weight: 600;
+        }
+
+        .marker:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* ===== HUD ===== */
+        .hud {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            display: flex;
+            gap: 8px;
+            z-index: 30;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            padding: 10px 14px;
+            border-radius: 14px;
+            min-width: 120px;
+            box-shadow: 0 8px 20px rgba(23, 79, 48, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat span {
+            font-size: 11px;
+            color: #637d70;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .stat b {
+            display: block;
+            font-size: 20px;
+            color: var(--green);
+            font-family: var(--font-mono);
+            margin-top: 2px;
+        }
+
+        .stat .icon {
+            font-size: 16px;
+            margin-right: 4px;
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            position: absolute;
+            right: 16px;
+            bottom: 20px;
+            display: grid;
+            gap: 8px;
+            z-index: 30;
+        }
+
+        .controls button {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            font-size: 22px;
+            color: var(--green);
+            box-shadow: 0 4px 16px rgba(23, 79, 48, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: grid;
+            place-items: center;
+            font-family: var(--font-body);
+        }
+
+        .controls button:hover {
+            transform: scale(1.05);
+            background: #fff;
+        }
+
+        .controls button:active {
+            transform: scale(0.92);
+        }
+
+        /* ===== PANEL ===== */
+        .panel {
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            bottom: 16px;
+            width: min(380px, calc(100vw - 32px));
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(22, 60, 38, 0.2);
+            overflow-y: auto;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .panel.show {
+            display: block;
+            animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background: var(--green);
+            border-radius: 4px;
+        }
+
+        .close {
+            float: right;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #eef6eb;
+            color: var(--green);
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: grid;
+            place-items: center;
+        }
+
+        .close:hover {
+            background: var(--green);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .treeimg {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin: 10px 0;
+            background: var(--green-pale);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            background: #e6f5e4;
+            color: var(--green);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .tag.epic {
+            background: #f5e6b8;
+            color: #8a6a20;
+        }
+
+        .tag.rare {
+            background: #d4e8f5;
+            color: #1a6e8a;
+        }
+
+        .tag.ephemeral {
+            background: #f5d4c4;
+            color: #8a3e1a;
+            animation: flashTag 1.8s ease-in-out infinite;
+        }
+
+        @keyframes flashTag {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--green);
+            margin: 12px 0;
+            font-family: var(--font-mono);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .box {
+            background: #f1f8ef;
+            border-radius: 12px;
+            padding: 10px 12px;
+            border: 1px solid rgba(23, 107, 72, 0.06);
+        }
+
+        .box span {
+            display: block;
+            font-size: 10px;
+            color: #698175;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .box b {
+            font-size: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .primary,
+        .secondary,
+        .danger {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 700;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: var(--font-body);
+            font-size: 14px;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--green), var(--green-light));
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(23, 107, 72, 0.25);
+        }
+
+        .primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(23, 107, 72, 0.35);
+        }
+
+        .primary:active {
+            transform: scale(0.97);
+        }
+
+        .secondary {
+            background: #edf6ea;
+            color: var(--green);
+        }
+
+        .secondary:hover {
+            background: #dce8d8;
+        }
+
+        .danger {
+            background: #fff0eb;
+            color: #bd5137;
+        }
+
+        .danger:hover {
+            background: #fde8e0;
+        }
+
+        /* ===== ADMIN PANEL ===== */
+        #adminPanel {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+            z-index: 35;
+            width: 260px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px;
+            border-radius: var(--radius);
+            box-shadow: 0 12px 40px rgba(23, 79, 48, 0.15);
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        #adminPanel b {
+            display: block;
+            font-size: 16px;
+            color: var(--green);
+            font-family: var(--font-mono);
+        }
+
+        #adminPanel .adminGrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        #adminPanel .adminGrid div {
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: #eef6eb;
+            font-size: 10px;
+            font-weight: 600;
+            color: #587064;
+        }
+
+        #adminPanel .adminGrid div b {
+            font-size: 18px;
+        }
+
+        #adminPanel small {
+            display: block;
+            margin-top: 10px;
+            font-size: 10px;
+            color: #698175;
+            line-height: 1.4;
+        }
+
+        /* ===== MODALS ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(16, 47, 34, 0.6);
+            backdrop-filter: blur(6px);
+            display: none;
+            place-items: center;
+            z-index: 100;
+            padding: 18px;
+        }
+
+        .overlay.show {
+            display: grid;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal {
+            width: min(520px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: modalSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--green);
+            border-radius: 4px;
+        }
+
+        .field {
+            margin: 12px 0;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #61786d;
+            margin-bottom: 4px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d7e5d3;
+            border-radius: 12px;
+            background: #fbfdf9;
+            font-family: var(--font-body);
+            font-size: 14px;
+            transition: all 0.2s;
+            color: var(--ink);
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(23, 107, 72, 0.
